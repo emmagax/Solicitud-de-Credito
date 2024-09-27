@@ -4,54 +4,82 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import './CreditRequestForm.css'
-import axios from 'axios';
 
 const CreditRequestForm = ({ onResult }) => {
-    const [formData, setFormData] = useState({
-        name: '',
-        lastname: '',
-        email: '',
-        rfc: '',
-        income: '',
-        amount: '',
-        term: ''
-    });
-    const [result, setResult] = useState(null);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+    const [name, setName] = useState('');
+    const [lastname, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [rfc, setRfc] = useState('');
+    const [income, setIncome] = useState('');
+    const [amount, setAmount] = useState('');
+    const [term, setTerm] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const requestData = {
+            name,
+            lastname,
+            email,
+            rfc,
+            income: parseFloat(income),
+            amount: parseFloat(amount),
+            term: parseInt(term),
+        };
+
         try {
-            const response = await axios.post('/api/credit-request', formData);
-            onResult(response.data);
+            const response = await fetch('http://localhost:5000/api/submit-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            onResult(result);
         } catch (error) {
-            console.error('Error submitting form', error);
+            console.error('Error submitting request:', error);
+            onResult({ status: 'Rechazado', message: 'Error al procesar la solicitud.' });
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <input name="name" placeholder="Nombre" onChange={handleChange} required />
-            <input name="lastname" placeholder="Apellido" onChange={handleChange} required />
-            <input name="email" placeholder="Correo Electronico" onChange={handleChange} required /><br />
-            <input name="rfc" placeholder="RFC" onChange={handleChange} required />
-            <input name="income" type="number" placeholder="Ingresos" onChange={handleChange} required />
-            <input name="amount" type="number" placeholder="Monto" onChange={handleChange} required />
-            <Form.Select aria-label="Default select example" name='term'>
-                <option>Plazo</option>
-                <option value="1">1 año</option>
-                <option value="2">5 años</option>
-                <option value="3">10 años</option>
-            </Form.Select>
-            <br />
-            <button type="submit">Enviar Solicitud</button>
-            {result && <div>{result.status}: {result.message}</div>}
+            <div>
+                <label>Nombre:</label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div>
+                <label>Apellido:</label>
+                <input type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} required />
+            </div>
+            <div>
+                <label>Email:</label>
+                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </div>
+            <div>
+                <label>RFC:</label>
+                <input type="text" value={rfc} onChange={(e) => setRfc(e.target.value)} required />
+            </div>
+            <div>
+                <label>Ingreso:</label>
+                <input type="number" value={income} onChange={(e) => setIncome(e.target.value)} required />
+            </div>
+            <div>
+                <label>Monto:</label>
+                <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} required />
+            </div>
+            <div>
+                <label>Plazo:</label>
+                <input type="number" value={term} onChange={(e) => setTerm(e.target.value)} required />
+            </div>
+            <button type="submit">Submit Request</button>
         </form>
-
     );
 };
 

@@ -1,23 +1,8 @@
-import { execute } from '../database/db';
+import { Schema, model } from 'mongoose';
 
-class Branch {
-    constructor(name, address) {
-        this.name = name;
-        this.address = address;
-    }
+const branchSchema = new Schema({
+    name: { type: String, required: true },
+    address: { type: String, required: true },
+});
 
-    static async create(name, address) {
-        const query = 'INSERT INTO Sucursales (Nombre, Direccion) VALUES (?, ?)';
-        const [result] = await execute(query, [name, address]);
-        return result.insertId;
-    }
-
-    static async getAll() {
-        const query = 'SELECT * FROM Sucursales';
-        const [rows] = await execute(query);
-        return rows;
-    }
-
-}
-
-export default Branch;
+export default model('Branch', branchSchema);

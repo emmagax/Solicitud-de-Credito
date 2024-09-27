@@ -1,26 +1,13 @@
-import { execute } from '../database/db'; 
+import mongoose from 'mongoose';
 
-class Client {
-    constructor(name, lastname, email, rfc, income) {
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.rfc = rfc;
-        this.income = income;
-    }
+const clientSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    lastname: { type: String, required: true },
+    email: { type: String, required: true },
+    rfc: { type: String, required: true },
+    income: { type: Number, required: true }
+});
 
-    static async create(name, lastname, email, rfc, income) {
-        const query = 'INSERT INTO Clientes (Nombre, DNI, Ingresos) VALUES (?, ?, ?)';
-        const [result] = await execute(query, [name, lastname, email, rfc, income]);
-        return result.insertId;
-    }
-
-    static async findById(id) {
-        const query = 'SELECT * FROM Clientes WHERE ID = ?';
-        const [rows] = await execute(query, [id]);
-        return rows[0];
-    }
-
-}
+const Client = mongoose.model('Client', clientSchema)
 
 export default Client;

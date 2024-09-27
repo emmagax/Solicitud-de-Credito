@@ -1,21 +1,15 @@
-import { createPool } from 'mysql2/promise';
+import { connect } from 'mongoose';
 
-const pool = createPool({
-    host: 'localhost',         // Database host
-    user: 'your_username',     // Database username
-    password: 'your_password', // Database password
-    database: 'your_database', // Database name
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
-
-const execute = async (query, params) => {
-    const [results] = await pool.execute(query, params);
-    return results;
+const connectDB = async () => {
+    try {
+        await connect('mongodb://localhost:27017/creditDB', {
+            
+        });
+        console.log('MongoDB connected successfully');
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        process.exit(1); 
+    }
 };
 
-export default {
-    pool,
-    execute
-};
+export default connectDB;

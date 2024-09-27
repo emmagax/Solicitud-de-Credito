@@ -1,21 +1,46 @@
-import { create } from '../models/client';
-import { create as _create } from '../models/request';
-import db from '../database/db'; 
+import Client from '../models/client.js';
+import Request from '../models/request.js'; 
 
-export async function submitRequest(req, res) {
+const submitRequest = async (req, res) => {
     try {
         const { name, lastname, email, rfc, income, amount, term } = req.body;
 
-        const clientId = await create(name, lastname, email, rfc, income);
+        const client = await Client.findOne({ rfc });
+        let clientId;
+
+        if (!client) {
+            const newClient = new Client({
+                name,
+                lastname,
+                email,
+                rfc,
+                income,
+            });
+            await newClient.save();
+            clientId = newClient._id; 
+        } else {
+            clientId = client._id;
+        }
 
         const status = amount <= income * 5 ? 'Aprobado' : 'Rechazado';
         const reason = status === 'Rechazado' ? 'Monto solicitado excede el límite.' : null;
 
-        await _create(clientId, amount, term, status, reason);
+        const newRequest = new Request({ 
+            clientId,
+            amount,
+            term,
+            status,
+            reason,
+        });
 
-        return res.json({ status, message: reason || 'Solicitud aprobada' });
+        
+        await newRequest.save();
+
+        return res.status(201).json({ status, message: reason || 'Solicitud aprobada', request: newRequest });
     } catch (error) {
         console.error('Error submitting request:', error);
         return res.status(500).json({ message: 'Error processing request' });
     }
-}
+};
+
+export default {submitRequest};

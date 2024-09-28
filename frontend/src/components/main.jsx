@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
 
 const Hash = () => {
   return (
-    <HashRouter base="/">
+    <HashRouter base=".">
       <App />
     </HashRouter>
   )

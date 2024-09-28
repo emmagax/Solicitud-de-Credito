@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 app.use(cors({
-    origin: 'http://localhost:5173/',
+    origin: 'https://emmagax.github.io',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 }));

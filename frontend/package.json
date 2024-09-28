@@ -1,6 +1,6 @@
 {
   "name": "solicitud-de-credito",
-  "homepage": "https://<Username>.github.io/<Repository-name>",
+  "homepage": "https://emmagax.github.io/Solicitud-de-Credito/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "start": "node server.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build" 
+    "deploy": "gh-pages -d dist" 
   },
   "author": "Emma Gaxiola <emma.gaxiol@gmail.com>",
   "license": "ISC",

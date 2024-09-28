@@ -5,7 +5,15 @@ import App from './App'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
-  <HashRouter base="/">
+  <StrictMode>
     <App />
-  </HashRouter>,
+  </StrictMode>,
 )
+
+const Hash = () => {
+  return (
+    <HashRouter base="/">
+      <App />
+    </HashRouter>
+  )
+};

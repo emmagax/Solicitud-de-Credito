@@ -1,3 +1,3 @@
-Simulador de solicitud de credito by Emma Gaxiola
+# Simulador de solicitud de credito por Emma Gaxiola
 
 Esta es una evaluación de desarollo Full Stack para el proceso de selección de Grupo Salinas.

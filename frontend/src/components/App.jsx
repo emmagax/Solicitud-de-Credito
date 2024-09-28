@@ -1,25 +1,17 @@
-import React, { useState } from 'react';
-import CreditRequestForm from './CreditRequestForm';
-import ResultDisplay from './ResultsDisplay';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Login from '../components/Login.jsx';
+import Home from '../components/Home.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = () => {
-    const [result, setResult] = useState(null);
 
-    const handleResult = (result) => {
-        setResult(result);
-    };
-
+function App() {
     return (
-        <div>
-            <h1>Simulador de Solicitud de Crédito</h1>
-            <CreditRequestForm onResult={handleResult} />
-            {result && <ResultDisplay result={result} />}
-        </div>
-
+        <Routes>
+            <Route path="/Solicitud-de-Credito" element={<Login />} />
+            <Route path="/Home" element={<Home />} />
+        </Routes>
     );
-
-};
-
-
+}
 
 export default App;

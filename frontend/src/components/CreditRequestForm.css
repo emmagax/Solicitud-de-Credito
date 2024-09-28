@@ -4,4 +4,15 @@
   padding: 2rem;
   text-align: center;
   justify-content: center;
+  
+}
+
+#root h1 {
+  font-size: 4em;
+  margin-bottom: 1em;
+}
+
+
+#root button {
+  margin-top: 2em;
 }

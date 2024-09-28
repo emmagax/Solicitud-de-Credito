@@ -49,37 +49,55 @@ const CreditRequestForm = ({ onResult }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Nombre:</label>
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-            </div>
-            <div>
-                <label>Apellido:</label>
-                <input type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} required />
-            </div>
-            <div>
-                <label>Email:</label>
-                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            </div>
-            <div>
-                <label>RFC:</label>
-                <input type="text" value={rfc} onChange={(e) => setRfc(e.target.value)} required />
-            </div>
-            <div>
-                <label>Ingreso:</label>
-                <input type="number" value={income} onChange={(e) => setIncome(e.target.value)} required />
-            </div>
-            <div>
-                <label>Monto:</label>
-                <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} required />
-            </div>
-            <div>
-                <label>Plazo:</label>
-                <input type="number" value={term} onChange={(e) => setTerm(e.target.value)} required />
-            </div>
-            <button type="submit">Submit Request</button>
-        </form>
+        <Form onSubmit={handleSubmit}>
+            <Row className="mb-3">
+                <Col>
+                    <Form.Group>
+                        <Form.Label>Nombre:</Form.Label>
+                        <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Apellido:</Form.Label>
+                        <Form.Control type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} required />
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Email:</Form.Label>
+                        <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Form.Group className="mb-3">
+                        <Form.Label>RFC:</Form.Label>
+                        <Form.Control type="text" value={rfc} onChange={(e) => setRfc(e.target.value)} required />
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>Ingreso:</Form.Label>
+                        <Form.Control type="number" value={income} onChange={(e) => setIncome(e.target.value)} required />
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>Monto:</Form.Label>
+                        <Form.Control type="number" value={amount} onChange={(e) => setAmount(e.target.value)} required />
+                    </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group>
+                        <Form.Label>Plazo (meses):</Form.Label>
+                        <Form.Control type="number" value={term} onChange={(e) => setTerm(e.target.value)} required />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Button type="submit">Enviar Solicitud</Button>
+        </Form>
     );
 };
 

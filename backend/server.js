@@ -10,11 +10,10 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
-app.use('/clients', creditController.submitRequest)
-
-
+app.post('/clients', creditController.submitRequest)
 app.post('/api/submit-request', creditController.submitRequest);
 
+
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
